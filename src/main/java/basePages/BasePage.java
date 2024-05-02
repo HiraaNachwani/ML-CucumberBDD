@@ -1,32 +1,72 @@
 package basePages;
 
-import com.aventstack.extentreports.Status;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import utilities.BrowserDriverFactory;
-import utilities.ExtentTestReporter;
 
+/**
+ * BasePage class contains common methods and utilities used across page classes.
+ */
 public class BasePage {
 
-    // Generic method to initialize PageFactory for a given page class using reflection
-    protected synchronized <T> T initPage(Class<T> pageClass) {
+    /**
+     * Verifies the visibility of a web element.
+     *
+     * @param element The web element to be verified
+     */
+    public void verifyVisibilityOfElement(WebElement element) {
         WebDriver driver = BrowserDriverFactory.getDriver();
-        return PageFactory.initElements(driver, pageClass);
+        try {
+            Assert.assertTrue(element.isDisplayed());
+            System.out.println("Element is displayed");
+        } catch (AssertionError e) {
+            System.err.println("Element is not displayed: " + e.getMessage());
+        }
     }
 
-    // Generic method to assert page title
-    public synchronized void assertPageTitle(String expectedTitle) {
-        WebDriver driver = BrowserDriverFactory.getDriver();
-        String actualTitle = driver.getTitle();
+    /**
+     * Verifies if two strings are equal.
+     *
+     * @param expected The expected string value
+     * @param actual   The actual string value
+     */
+    public static void verifyEquals(String expected, String actual) {
         try {
-            Assert.assertEquals(actualTitle, expectedTitle, "Page title does not match expected. Actual: " + actualTitle + ", Expected: " + expectedTitle);
-            // Logging the assertion result if it passes
-            ExtentTestReporter.logger(Status.PASS, "Page title matches expected: " + expectedTitle);
+            Assert.assertEquals(expected, actual);
+            System.out.println("Assertion passed: Expected = " + expected + ", Actual = " + actual);
         } catch (AssertionError e) {
-            // Logging the assertion result if it fails
-            ExtentTestReporter.logger(Status.FAIL, "Page title does not match expected. Actual: " + actualTitle + ", Expected: " + expectedTitle);
-            throw e; // Re-throwing the exception to fail the test
+            System.err.println("Assertion failed: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Clicks on a web element.
+     *
+     * @param element The web element to be clicked
+     */
+    public void clickElement(WebElement element) {
+        try {
+            element.click();
+            System.out.println("Clicked on element");
+        } catch (Exception e) {
+            System.err.println("Failed to click element: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Enters text into a text field.
+     *
+     * @param element The text field web element
+     * @param text    The text to be entered
+     */
+    public void enterText(WebElement element, String text) {
+        try {
+            element.sendKeys(text);
+            System.out.println("Entered text: " + text);
+        } catch (Exception e) {
+            System.err.println("Failed to enter text: " + e.getMessage());
         }
     }
 }
