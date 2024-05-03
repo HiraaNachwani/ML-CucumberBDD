@@ -13,4 +13,16 @@ public class PizzahutHomePageObject {
 
     // XPath locator for the first auto-suggested location
     public static final String DIV_FIRST_AUTOSUGGESTIONS = "(//div[@class='typography-4'])[1]";
+
+    public static final String DIV_BLACK_SCREEN = "//div[@aria-label='OfferCollectionOverlay']";
+
+    public static final String BTN_CLOSE_OFFER = "//button[@data-testid='close-offer-collection']";
+
+    public static final String TXT_THIRD_OPTION = "(//p[@data-synth='hut-option-name-distance'])[3]";
+
+    public static final String BTN_START_YOUR_ORDER = "//span[text()='Start your order']";
+
+
+
+
 }

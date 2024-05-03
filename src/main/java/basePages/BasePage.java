@@ -63,6 +63,7 @@ public class BasePage {
      */
     public void enterText(WebElement element, String text) {
         try {
+            element.clear();
             element.sendKeys(text);
             System.out.println("Entered text: " + text);
         } catch (Exception e) {

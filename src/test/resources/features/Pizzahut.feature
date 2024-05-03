@@ -2,13 +2,16 @@ Feature: Verify Pizza Hut Functionality
   @Smoke
   Scenario Outline: Validate Pizzahut pizza order flow
     Given User launch Pizzahut application with "<URL>"
-    Then User see pop up for delivery asking for enter location
-    And User type address as "<Location>"
-    Then User select first auto populate drop down option
-    # When User wait for auto location black pop up screen
-    # Then User close the pop up screen
-    # When User navigate to deails page
-    # Then User validate vegetarian radio button flag is off
+    When User see pop up for delivery asking for enter location
+    Then User type address as "<Location>"
+    And User select first auto populate drop down option
+    And User wait for auto location black pop up screen
+    Then User close the pop up screen
+    When User type address as "<Location>"
+    And User select first auto populate drop down option
+    And User select third option from nearby Hut
+    Then User navigate to deals page
+    Then User validate vegetarian radio button flag is off
     # And User clicks on Pizzas menu bar option
     # When User select add button of any pizza from Recommended
     # Then User see that the pizza is getting added under Your Basket
