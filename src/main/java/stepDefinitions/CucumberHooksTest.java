@@ -4,28 +4,33 @@ import basePages.BaseTest;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import utilities.AssertFactory;
-import utilities.AssertionCollector;
+import utilities.ExcelDataProvider;
+import utilities.ExtentManager;
+import utilities.ExtentTestReporter;
+
+import java.util.Map;
 
 public class CucumberHooksTest extends BaseTest {
-    private static final Logger logger = LogManager.getLogger(CucumberHooksTest.class);
+
+    public static Map<String, Map<String, Map<String, Object>>> excelDataMap;
 
     // Before hook to set up preconditions before each scenario
     @Before
-    public void setup() {
-        System.out.println("Before Hook Started");
+    public void setup(Scenario scenario) {
+        ExtentTestReporter.startTest(scenario.getName());
+        excelDataMap = ExcelDataProvider.getExcelDataMap();
         setBrowser();
     }
 
     // After hook to perform cleanup after each scenario
     @After
     public void teardown(Scenario scenario) {
-        AssertFactory assertFactory = AssertFactory.getInstance();
-        assertFactory.assertAll();
         closeBrowser();
         closeDriver();
+        ExtentTestReporter.endTest(scenario);
+        ExtentManager.getInstance().flush();
+        AssertFactory.getInstance().assertAll();
         System.out.println("After Hook Executed");
     }
 }

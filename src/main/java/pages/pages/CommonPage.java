@@ -1,10 +1,9 @@
-package pom.pages;
+package pages.pages;
 
 import basePages.BasePage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pom.pageObjects.CommonPageObject;
-import utilities.AssertFactory;
+import pages.pageObjects.CommonPageObject;
 
 public class CommonPage extends BasePage {
 

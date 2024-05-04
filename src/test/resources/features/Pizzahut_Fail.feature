@@ -1,7 +1,7 @@
-Feature: Verify Pizza Hut Functionality
+Feature: Verify Pizza Hut Functionality - Failed
 
   @Smoke
-  Scenario Outline: Validate Pizzahut pizza order flow
+  Scenario Outline: Validate Pizzahut pizza order flow - failed
     Given User launch Pizzahut application with "<URL>"
     When User see pop up for delivery asking for enter location
     Then User type address as "<Location>"

@@ -1,18 +1,19 @@
 package basePages;
 
-import org.junit.Assert;
+import com.aventstack.extentreports.Status;
+import io.cucumber.java.bs.A;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import utilities.AssertFactory;
 import utilities.BrowserDriverFactory;
+import utilities.ExtentTestReporter;
 
 /**
  * BasePage class contains common methods and utilities used across page classes.
  */
 public class BasePage {
 
-    public AssertFactory assertFactory = AssertFactory.getInstance();;
+    protected AssertFactory assertFactory = AssertFactory.getInstance();
 
     /**
      * Clicks on a web element.
@@ -23,8 +24,10 @@ public class BasePage {
         try {
             element.click();
             System.out.println("Clicked on element: " + element);
+            ExtentTestReporter.log(Status.PASS, "Clicked on element: " + element);
         } catch (Exception e) {
             System.err.println("Failed to click element: " + element + " - " + e.getMessage());
+            ExtentTestReporter.log(Status.FAIL, "Failed to click element: " + element + " - " + e.getMessage());
         }
     }
 
@@ -39,8 +42,10 @@ public class BasePage {
             element.clear();
             element.sendKeys(text);
             System.out.println("Entered text: " + text + " into element: " + element);
+            ExtentTestReporter.log(Status.PASS, "Entered text: " + text + " into element: " + element);
         } catch (Exception e) {
             System.err.println("Failed to enter text: " + text + " into element: " + element + " - " + e.getMessage());
+            ExtentTestReporter.log(Status.FAIL, "Failed to enter text: " + text + " into element: " + element + " - " + e.getMessage());
         }
     }
 
@@ -55,9 +60,11 @@ public class BasePage {
         try {
             String value = element.getAttribute(attribute);
             System.out.println("Retrieved attribute value: " + value + " for element: " + element);
+            ExtentTestReporter.log(Status.PASS, "Retrieved attribute value: " + value + " for element: " + element);
             return value;
         } catch (Exception e) {
             System.err.println("Failed to retrieve attribute value for element: " + element + " - " + e.getMessage());
+            ExtentTestReporter.log(Status.FAIL, "Failed to retrieve attribute value for element: " + element + " - " + e.getMessage());
             return null;
         }
     }
@@ -72,13 +79,14 @@ public class BasePage {
         try {
             String text = element.getText();
             System.out.println("Retrieved text: " + text + " for element: " + element);
+            ExtentTestReporter.log(Status.PASS, "Retrieved text: " + text + " for element: " + element);
             return text;
         } catch (Exception e) {
             System.err.println("Failed to retrieve text for element: " + element + " - " + e.getMessage());
+            ExtentTestReporter.log(Status.FAIL, "Failed to retrieve text for element: " + element + " - " + e.getMessage());
             return null;
         }
     }
-
 
     /**
      * Retrieves the title of the current web page.
@@ -90,9 +98,11 @@ public class BasePage {
         try {
             String title = driver.getTitle();
             System.out.println("Retrieved page title: " + title);
+            ExtentTestReporter.log(Status.PASS, "Retrieved page title: " + title);
             return title;
         } catch (Exception e) {
             System.err.println("Failed to retrieve page title: " + e.getMessage());
+            ExtentTestReporter.log(Status.FAIL, "Failed to retrieve page title: " + e.getMessage());
             return null;
         }
     }

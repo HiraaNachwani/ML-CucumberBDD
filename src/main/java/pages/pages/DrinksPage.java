@@ -1,9 +1,9 @@
-package pom.pages;
+package pages.pages;
 
 import basePages.BasePage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pom.pageObjects.DrinksPageObject;
+import pages.pageObjects.DrinksPageObject;
 
 public class DrinksPage extends BasePage {
 

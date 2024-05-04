@@ -1,7 +1,6 @@
-package pom.pages;
+package pages.pages;
 
 import basePages.BasePage;
-import utilities.AssertFactory;
 
 public class DealsPage extends BasePage {
 

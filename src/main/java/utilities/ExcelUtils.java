@@ -15,7 +15,7 @@ public class ExcelUtils {
         // Create a map to store the data
         Map<String, Map<String, Object>> dataMap = new HashMap<>();
         // Provide the path to your Excel file
-        String filePath = System.getProperty("user.dir") + "/src/test/resources/TestDataSheet.xlsx";
+        String filePath = System.getProperty("user.dir") + "/src/test/resources/excelSheets/ExcelTestData.xlsx";
         try (FileInputStream inputStream = new FileInputStream(filePath);
              XSSFWorkbook workbook = new XSSFWorkbook(inputStream)) {
 

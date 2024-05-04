@@ -1,8 +1,10 @@
 package basePages;
 
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import utilities.BrowserDriverFactory;
+import utilities.ExtentTestReporter;
 
 import java.time.Duration;
 
@@ -24,6 +26,7 @@ public class BaseTest {
             return PageFactory.initElements(driver, pageClass);
         } catch (Exception e) {
             e.printStackTrace();
+            ExtentTestReporter.log(Status.FAIL, "Failed to initialize page: " + pageClass.getSimpleName());
             // Log the exception
             return null;
         }
@@ -38,8 +41,10 @@ public class BaseTest {
         try {
             WebDriver driver = BrowserDriverFactory.getDriver();
             driver.get(URL);
+            ExtentTestReporter.log(Status.PASS, "Opened application URL: " + URL);
         } catch (Exception e) {
             e.printStackTrace();
+            ExtentTestReporter.log(Status.FAIL, "Failed to open application URL: " + URL);
             // Log the exception
         }
     }
@@ -56,9 +61,11 @@ public class BaseTest {
                 driver.manage().window().maximize();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+                ExtentTestReporter.log(Status.PASS, "Browser setup completed successfully");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            ExtentTestReporter.log(Status.FAIL, "Failed to set up browser");
             // Log the exception
         }
     }
@@ -71,9 +78,11 @@ public class BaseTest {
             WebDriver driver = BrowserDriverFactory.getDriver();
             if (driver != null) {
                 driver.quit(); // Quit the WebDriver
+                ExtentTestReporter.log(Status.PASS, "WebDriver instance closed");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            ExtentTestReporter.log(Status.FAIL, "Failed to close WebDriver instance");
             // Log the exception
         }
     }
@@ -86,9 +95,11 @@ public class BaseTest {
             WebDriver driver = BrowserDriverFactory.getDriver();
             if (driver != null) {
                 driver.close(); // Close the browser window
+                ExtentTestReporter.log(Status.PASS, "Browser window closed");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            ExtentTestReporter.log(Status.FAIL, "Failed to close browser window");
             // Log the exception
         }
     }

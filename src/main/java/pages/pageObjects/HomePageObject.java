@@ -1,4 +1,4 @@
-package pom.pageObjects;
+package pages.pageObjects;
 
 /**
  * Class containing locators for elements on the Home page

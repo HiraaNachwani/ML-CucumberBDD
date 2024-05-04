@@ -10,7 +10,8 @@ public class ExcelDataProvider {
     public static void loadExcelData() {
         // Load Excel data from all sheets and store it in the map
         excelDataMap = new HashMap<>();
-        excelDataMap.put(ExcelSheetConstants.HOME_PAGE, ExcelUtils.getMap(ExcelSheetConstants.HOME_PAGE));
+        excelDataMap.put(ExcelSheetConstants.COMMON_PAGE, ExcelUtils.getMap(ExcelSheetConstants.COMMON_PAGE));
+        excelDataMap.put(ExcelSheetConstants.DEALS_PAGE, ExcelUtils.getMap(ExcelSheetConstants.DEALS_PAGE));
         excelDataMap.put(ExcelSheetConstants.CHECKOUT_PAGE, ExcelUtils.getMap(ExcelSheetConstants.CHECKOUT_PAGE));
         // Add more sheets if needed
     }

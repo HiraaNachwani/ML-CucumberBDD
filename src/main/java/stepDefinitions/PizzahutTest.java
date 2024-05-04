@@ -1,11 +1,14 @@
 package stepDefinitions;
 
 import basePages.BaseTest;
+import constants.ExcelSheetConstants;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
-import pom.pages.*;
+import pages.pages.*;
+
+import java.util.Map;
 
 /**
  * Step definitions for Pizza Hut application tests.
@@ -19,6 +22,9 @@ public class PizzahutTest extends BaseTest {
     DrinksPage drinksPage;
     PizzasPage pizzasPage;
     CheckoutPage checkoutPage;
+    Map<String, Map<String, Object>> checkOutPageData;
+    Map<String, Map<String, Object>> commonPageData;
+    Map<String, Map<String, Object>> dealsPageData;
 
     /**
      * Constructor to initialize page objects.
@@ -30,6 +36,9 @@ public class PizzahutTest extends BaseTest {
         this.drinksPage = initPage(DrinksPage.class);
         this.pizzasPage = initPage(PizzasPage.class);
         this.checkoutPage = initPage(CheckoutPage.class);
+        this.commonPageData = CucumberHooksTest.excelDataMap.get(ExcelSheetConstants.COMMON_PAGE);
+        this.dealsPageData = CucumberHooksTest.excelDataMap.get(ExcelSheetConstants.DEALS_PAGE);
+        this.checkOutPageData = CucumberHooksTest.excelDataMap.get(ExcelSheetConstants.CHECKOUT_PAGE);
     }
 
     // Step Definitions
@@ -74,13 +83,15 @@ public class PizzahutTest extends BaseTest {
     @And("User select third option from nearby Hut")
     public void user_select_third_option_from_nearby_hut() {
         homePage.clickThirdNearestHut();
-        homePage.clickStartYourOrder();
+
+//      Below Statement is required if we execute suite in morning hours before stores openining hours
+//     homePage.clickStartYourOrder();
     }
 
     // Step 8: Then User navigate to deals page
     @Then("User navigate to deals page")
     public void user_navigate_to_deals_page() {
-        dealsPage.verifyTitleOfPage("Online Pizza Order, Pizza Deals, Pizza Hut Online Orders | Pizza Hut India");
+        dealsPage.verifyTitleOfPage((String) dealsPageData.get("pageTitle").get("Value1"));
     }
 
     // Step 9: Then User validate vegetarian radio button flag is off
@@ -116,7 +127,7 @@ public class PizzahutTest extends BaseTest {
     // Step 14: Then User validate checkout button contains Item count
     @Then("User validate checkout button contains Item count")
     public void user_validate_checkout_button_contains_item_count() {
-        commonPage.verifyCheckoutLeftItemCount("1 item");
+        commonPage.verifyCheckoutLeftItemCount((String) commonPageData.get("itemCount").get("Value1"));
     }
 
     // Step 15: Then User validate checkout button contains total price count
@@ -170,6 +181,6 @@ public class PizzahutTest extends BaseTest {
     // Step 23: Then User navigate to Checkout Page and verifies title.
     @Then("User navigate to Checkout Page and verifies title.")
     public void user_navigate_to_checkout_page_and_verifies_title() {
-        checkoutPage.verifyPageTitle("Checkout | Pizza Hut India");
+        checkoutPage.verifyPageTitle((String)checkOutPageData.get("pageTitle").get("Value1"));
     }
 }

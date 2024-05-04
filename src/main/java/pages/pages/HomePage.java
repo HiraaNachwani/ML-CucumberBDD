@@ -1,10 +1,9 @@
-package pom.pages;
+package pages.pages;
 
 import basePages.BasePage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pom.pageObjects.HomePageObject;
-import utilities.AssertFactory;
+import pages.pageObjects.HomePageObject;
 import utilities.WebDriverWaitUtils;
 
 /**

@@ -1,4 +1,4 @@
-package pom.pageObjects;
+package pages.pageObjects;
 
 public class PizzasPageObject {
 

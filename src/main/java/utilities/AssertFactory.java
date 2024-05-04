@@ -1,16 +1,19 @@
 package utilities;
 
+import com.aventstack.extentreports.Status;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AssertFactory {
 
     private static AssertFactory instance;
-    public final List<AssertionError> errors = new ArrayList<>();
+    private final List<AssertionError> errors = new CopyOnWriteArrayList<>(); // Use CopyOnWriteArrayList for thread safety
+
 
     private AssertFactory() {
         // Private constructor to prevent instantiation from outside
@@ -32,9 +35,13 @@ public class AssertFactory {
         WebDriver driver = BrowserDriverFactory.getDriver();
         try {
             Assert.assertTrue(element.isDisplayed());
-            System.out.println("Element is displayed");
+            String logMessage = "Element '" + element.toString() + "' is displayed";
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Element is not displayed: " + e.getMessage());
+            String errorMessage = "Element '" + element.toString() + "' is not displayed: " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
@@ -48,9 +55,13 @@ public class AssertFactory {
     public void verifyTrue(boolean condition, String message) {
         try {
             Assert.assertTrue(message, condition);
-            System.out.println("Assertion passed: " + message);
+            String logMessage = "Assertion passed: " + message;
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Assertion failed: " + e.getMessage());
+            String errorMessage = "Assertion failed: " + message + " - " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
@@ -65,9 +76,13 @@ public class AssertFactory {
     public void verifyEquals(String expected, String actual) {
         try {
             Assert.assertEquals(expected, actual);
-            System.out.println("Assertion passed: Expected = " + expected + ", Actual = " + actual);
+            String logMessage = "Assertion passed: Expected = " + expected + ", Actual = " + actual;
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Assertion failed: " + e.getMessage());
+            String errorMessage = "Assertion failed: Expected = " + expected + ", Actual = " + actual + " - " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
@@ -81,9 +96,13 @@ public class AssertFactory {
     public void verifyEquals(int expected, int actual) {
         try {
             Assert.assertEquals(expected, actual);
-            System.out.println("Assertion passed: Expected = " + expected + ", Actual = " + actual);
+            String logMessage = "Assertion passed: Expected = " + expected + ", Actual = " + actual;
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Assertion failed: " + e.getMessage());
+            String errorMessage = "Assertion failed: Expected = " + expected + ", Actual = " + actual + " - " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
@@ -97,9 +116,13 @@ public class AssertFactory {
     public void verifyEquals(boolean expected, boolean actual) {
         try {
             Assert.assertEquals(expected, actual);
-            System.out.println("Assertion passed: Expected = " + expected + ", Actual = " + actual);
+            String logMessage = "Assertion passed: Expected = " + expected + ", Actual = " + actual;
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Assertion failed: " + e.getMessage());
+            String errorMessage = "Assertion failed: Expected = " + expected + ", Actual = " + actual + " - " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
@@ -114,9 +137,13 @@ public class AssertFactory {
     public void verifyEquals(double expected, double actual, double delta) {
         try {
             Assert.assertEquals(expected, actual, delta);
-            System.out.println("Assertion passed: Expected = " + expected + ", Actual = " + actual);
+            String logMessage = "Assertion passed: Expected = " + expected + ", Actual = " + actual;
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Assertion failed: " + e.getMessage());
+            String errorMessage = "Assertion failed: Expected = " + expected + ", Actual = " + actual + " - " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
@@ -130,22 +157,28 @@ public class AssertFactory {
     public void verifyEquals(Object expected, Object actual) {
         try {
             Assert.assertEquals(expected, actual);
-            System.out.println("Assertion passed: Expected = " + expected + ", Actual = " + actual);
+            String logMessage = "Assertion passed: Expected = " + expected + ", Actual = " + actual;
+            System.out.println(logMessage);
+            ExtentTestReporter.log(Status.PASS, logMessage);
         } catch (AssertionError e) {
-            System.err.println("Assertion failed: " + e.getMessage());
+            String errorMessage = "Assertion failed: Expected = " + expected + ", Actual = " + actual + " - " + e.getMessage();
+            System.err.println(errorMessage);
+            ExtentTestReporter.log(Status.FAIL, errorMessage);
             errors.add(e);
         }
     }
 
     // Add more assertion methods as needed...
 
-    public void assertAll() {
+    public synchronized void assertAll() {
         if (!errors.isEmpty()) {
             StringBuilder errorMessage = new StringBuilder("Soft assertion failures:\n");
             for (AssertionError error : errors) {
                 errorMessage.append(error.getMessage()).append("\n");
             }
+            errors.clear();
             throw new AssertionError(errorMessage.toString());
+
         }
     }
 }
