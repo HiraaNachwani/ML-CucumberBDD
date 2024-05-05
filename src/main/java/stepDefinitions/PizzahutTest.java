@@ -85,7 +85,7 @@ public class PizzahutTest extends BaseTest {
         homePage.clickThirdNearestHut();
 
 //      Below Statement is required if we execute suite in morning hours before stores openining hours
-//     homePage.clickStartYourOrder();
+        homePage.clickStartYourOrder();
     }
 
     // Step 8: Then User navigate to deals page
